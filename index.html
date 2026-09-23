@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refrigeration & Heat Transfer - Interactive Learning</title>
+  <!-- Google Fonts & Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Kanit', sans-serif; }
+    .active-tab { border-bottom: 3px solid #0284c7; color: #0284c7; font-weight: 600; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-teal-800 via-cyan-800 to-sky-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <span class="bg-emerald-500 text-white text-xs px-2 py-1 rounded font-semibold tracking-wider uppercase">KU Courseware</span>
+        <h1 class="text-xl md:text-2xl font-bold mt-1">Refrigeration & Heat Transfer</h1>
+        <p class="text-xs md:text-sm text-cyan-200">คู่มือและระบบคำนวณจำลองวัฏจักรความเย็นและการถ่ายเทความร้อน</p>
+      </div>
+      <nav class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
+        <button onclick="switchTab('w1')" id="tab-w1" class="px-3 py-1.5 rounded-lg text-sm bg-white/10 hover:bg-white/20 transition whitespace-nowrap">Week 1: พื้นฐาน & การปรับอากาศ</button>
+        <button onclick="switchTab('w2')" id="tab-w2" class="px-3 py-1.5 rounded-lg text-sm bg-white/10 hover:bg-white/20 transition whitespace-nowrap">Week 2: P-h & วัฏจักรจริง</button>
+        <button onclick="switchTab('w3')" id="tab-w3" class="px-3 py-1.5 rounded-lg text-sm bg-white/10 hover:bg-white/20 transition whitespace-nowrap">Week 3: อุปกรณ์ & การอัด 2 ขั้น</button>
+        <button onclick="switchTab('w4')" id="tab-w4" class="px-3 py-1.5 rounded-lg text-sm bg-white/10 hover:bg-white/20 transition whitespace-nowrap">Week 4: สารทำความเย็น & Heat Pipe</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <!-- ==================== WEEK 1 ==================== -->
+    <section id="content-w1" class="tab-content space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xl font-bold text-sky-900 border-l-4 border-sky-600 pl-3 mb-4">1. พื้นฐานและวัฏจักรการทำความเย็นแบบอัดไอ (Week 1)</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          การทำความเย็น (Refrigeration) คือการดึงความร้อนออกจากวัตถุหรือพื้นที่ปิดเพื่อให้มีอุณหภูมิต่ำกว่าสิ่งแวดล้อม ส่วนการปรับอากาศ (Air Conditioning) มุ่งเน้นความสุขสบายของมนุษย์ตามมาตรฐาน ASHRAE (ควบคุมอุณหภูมิ, ความชื้น, การระบายอากาศ)
+        </p>
+
+        <!-- Diagram: 4 Main Components -->
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <h3 class="font-semibold text-slate-700 mb-3 text-center">แผนผังการไหลของระบบทำความเย็นแบบอัดไอ (4 องค์ประกอบหลัก)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+            <div class="bg-blue-100 border border-blue-300 p-4 rounded-xl">
+              <span class="text-2xl">❄️</span>
+              <h4 class="font-bold text-blue-900 mt-1">1. Evaporator (คอยล์เย็น)</h4>
+              <p class="text-xs text-blue-700 mt-1">ดูดรับความร้อน ($Q_{in}$)<br>สารทำความเย็นเดือดกลายเป็นไอ</p>
+            </div>
+            <div class="bg-amber-100 border border-amber-300 p-4 rounded-xl">
+              <span class="text-2xl">⚙️</span>
+              <h4 class="font-bold text-amber-900 mt-1">2. Compressor (คอมเพรสเซอร์)</h4>
+              <p class="text-xs text-amber-700 mt-1">อัดไอสาร ($W_{in}$)<br>เพิ่มความดันและอุณหภูมิให้สูง</p>
+            </div>
+            <div class="bg-red-100 border border-red-300 p-4 rounded-xl">
+              <span class="text-2xl">🔥</span>
+              <h4 class="font-bold text-red-900 mt-1">3. Condenser (คอยล์ร้อน)</h4>
+              <p class="text-xs text-red-700 mt-1">ระบายความร้อนทิ้ง ($Q_{out}$)<br>ควบแน่นไอสารเป็นของเหลว</p>
+            </div>
+            <div class="bg-emerald-100 border border-emerald-300 p-4 rounded-xl">
+              <span class="text-2xl">🔽</span>
+              <h4 class="font-bold text-emerald-900 mt-1">4. Expansion Valve (วาล์วลดความดัน)</h4>
+              <p class="text-xs text-emerald-700 mt-1">ลดความดันอย่างฉับพลัน<br>เตรียมเข้าคอยล์เย็นรอบใหม่</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WEEK 2 ==================== -->
+    <section id="content-w2" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xl font-bold text-sky-900 border-l-4 border-sky-600 pl-3 mb-4">2. การวิเคราะห์บน P-h Diagram & เครื่องคำนวณสมรรถนะ (Week 2)</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">
+          การทำงานของระบบประเมินได้จาก <b>Refrigerating Effect ($q_e$)</b>, <b>Work of Compression ($w_c$)</b> และ <b>Coefficient of Performance (COP)</b> เมื่อเกิด <i>Superheating</i> (ไอร้อนยิ่งยวด) ปริมาตรจำเพาะจะสูงขึ้นทำให้คอมเพรสเซอร์ทำงานหนักขึ้น ในขณะที่ <i>Subcooling</i> (ของเหลวเย็นยิ่งยวด) จะช่วยเพิ่มค่าความเย็นสุทธิ
+        </p>
+
+        <!-- Interactive Calculator -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
+          <div class="space-y-4">
+            <h3 class="font-bold text-slate-800">เครื่องทดลองคำนวณ COP (จำลองค่า Enthalpy)</h3>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Enthalpy ทางออกคอยล์เย็น h1 (kJ/kg)</label>
+              <input type="number" id="inp-h1" value="250" class="w-full border rounded-lg p-2 text-sm" oninput="calcCycle()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Enthalpy ทางออกคอมเพรสเซอร์ h2 (kJ/kg)</label>
+              <input type="number" id="inp-h2" value="285" class="w-full border rounded-lg p-2 text-sm" oninput="calcCycle()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Enthalpy ทางออกคอยล์ร้อน h3 = h4 (kJ/kg)</label>
+              <input type="number" id="inp-h3" value="105" class="w-full border rounded-lg p-2 text-sm" oninput="calcCycle()">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">อัตราการไหลเชิงมวล m (kg/s)</label>
+              <input type="number" id="inp-m" value="0.05" step="0.01" class="w-full border rounded-lg p-2 text-sm" oninput="calcCycle()">
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-center bg-white p-5 rounded-xl border border-sky-100 shadow-sm space-y-3">
+            <h4 class="font-bold text-sky-900 border-b pb-2">ผลการวิเคราะห์สมรรถนะ</h4>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Refrigerating Effect (qe):</span>
+              <span id="res-qe" class="font-bold text-slate-800">145.00 kJ/kg</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Work of Compression (qw):</span>
+              <span id="res-qw" class="font-bold text-slate-800">35.00 kJ/kg</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Cooling Capacity (Qe):</span>
+              <span id="res-Qe" class="font-bold text-emerald-600">7.25 kW (~2.06 Tons)</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-slate-500">Power Input (Win):</span>
+              <span id="res-Win" class="font-bold text-amber-600">1.75 kW</span>
+            </div>
+            <div class="p-3 bg-sky-50 rounded-lg text-center mt-2">
+              <span class="text-xs text-sky-600 uppercase tracking-wider font-semibold">สัมประสิทธิ์สมรรถนะ (COP)</span>
+              <p id="res-cop" class="text-3xl font-extrabold text-sky-700 mt-1">4.14</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WEEK 3 ==================== -->
+    <section id="content-w3" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xl font-bold text-sky-900 border-l-4 border-sky-600 pl-3 mb-4">3. อุปกรณ์และการอัดหลายขั้น (Week 3)</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <h3 class="font-bold text-slate-800">Compound Compression with Intercooling</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              เมื่อระบบมีอัตราส่วนการอัดสูง ($R = P_D / P_S$) ประสิทธิภาพเชิงปริมาตรจะตกต่ำและอุณหภูมิหลังคอมเพรสเซอร์จะสูงเกินไป การแก้ปัญหาคือแบ่งการอัดออกเป็น 2 ขั้น โดยมีความดันระหว่างขั้นที่เหมาะสมที่สุดคือ:
+            </p>
+            <div class="p-3 bg-slate-100 rounded-lg font-mono text-center text-sky-800 font-bold">
+              P_inter = &radic;(P_evap &times; P_cond)
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-4 space-y-2">
+              <label class="block text-xs font-semibold text-slate-600">ความดันด้านระเหย P_evap (bar)</label>
+              <input type="number" id="inp-pe" value="1.5" class="w-full border rounded p-1.5 text-sm" oninput="calcInter()">
+              <label class="block text-xs font-semibold text-slate-600">ความดันด้านควบแน่น P_cond (bar)</label>
+              <input type="number" id="inp-pc" value="15.0" class="w-full border rounded p-1.5 text-sm" oninput="calcInter()">
+              <div class="pt-2 text-sm text-center">
+                ค่าความดันระหว่างขั้นที่เหมาะสม: <b id="res-pinter" class="text-sky-700 text-lg">4.74 bar</b>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h3 class="font-bold text-slate-800">หอทำความเย็น (Cooling Tower)</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              ใช้ระบายความร้อนของ Water-cooled Condenser โดยอาศัยการถ่ายเทความร้อนและความชื้นระหว่างน้ำอุ่นกับอากาศ
+            </p>
+            <ul class="text-sm text-slate-700 space-y-1.5 list-disc list-inside">
+              <li><b>Forced Draft:</b> พัดลมเป่าอัดอากาศเข้าด้านล่าง</li>
+              <li><b>Induced Draft:</b> พัดลมดูดอากาศออกทางด้านบน ช่วยลดปัญหาการหมุนวนของลมชื้นย้อนกลับเข้าหอ</li>
+              <li><b>Cross Flow & Counter Flow:</b> จำแนกตามทิศทางการปะทะระหว่างมวลน้ำและกระแสลม</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== WEEK 4 ==================== -->
+    <section id="content-w4" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <h2 class="text-xl font-bold text-sky-900 border-l-4 border-sky-600 pl-3 mb-4">4. สารทำความเย็น, การเดือด & Heat Pipe (Week 4)</h2>
+
+        <!-- Refrigerant Decoder -->
+        <div class="mb-8">
+          <h3 class="font-bold text-slate-800 mb-2">ระบบถอดรหัสสูตรโมเลกุลสารทำความเย็น (ASHRAE Standard)</h3>
+          <div class="flex gap-2 max-w-md">
+            <input type="text" id="inp-ref" value="R-134a" placeholder="เช่น R-134a, R-32, R-12" class="border rounded-lg px-3 py-2 text-sm w-full uppercase">
+            <button onclick="decodeRef()" class="bg-sky-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-sky-700">ถอดรหัส</button>
+          </div>
+          <div id="res-ref" class="mt-3 p-3 bg-sky-50 rounded-lg text-sm text-sky-900 font-medium">
+            คาร์บอน (C): 2 อะตอม | ไฮโดรเจน (H): 2 อะตอม | ฟลูออรีน (F): 4 อะตอม
+          </div>
+        </div>
+
+        <!-- Boiling Regimes & Heat Pipe -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-2">พฤติกรรมการเดือด (Boiling Regimes)</h4>
+            <ol class="text-xs text-slate-600 space-y-2 list-decimal list-inside">
+              <li><b>Natural Convection:</b> ฟองยังไม่เกิด ความร้อนส่งผ่านการพาอิสระ</li>
+              <li><b>Nucleate Boiling:</b> ฟองไอผุดตัว ถ่ายเทความร้อนดีที่สุดจนถึงจุด Critical Heat Flux (CHF)</li>
+              <li><b>Transition Boiling:</b> มีฟิล์มไอบางส่วนขวางผิวหน้า อัตราถ่ายเทความร้อนลดลงอย่างรวดเร็ว</li>
+              <li><b>Film Boiling:</b> ฟิล์มไอกั้นสมบูรณ์ (Leidenfrost Point)</li>
+            </ol>
+          </div>
+
+          <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-2">ท่อความร้อน (Heat Pipe)</h4>
+            <p class="text-xs text-slate-600 leading-relaxed mb-2">
+              อุปกรณ์ถ่ายเทความร้อนแบบ Passive ความนำความร้อนสูงมาก ด้วยกระบวนการ <b>ระเหย (Evaporator) &rarr; วิ่งผ่านห้องว่าง (Vapor Core) &rarr; ควบแน่น (Condenser) &rarr; ไหลซึมกลับด้วยแรงดึงผิวผ่านไส้ตะเกียง (Wick)</b>
+            </p>
+            <div class="p-2 bg-emerald-50 border border-emerald-200 rounded text-emerald-800 text-xs">
+              💡 นิยมนำไปติดตั้งในสมาร์ตโฟน แล็ปท็อป และระบบหล่อเย็นชิปประมวลผลความร้อนสูง
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interactive Script -->
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('nav button').forEach(el => el.classList.remove('bg-white/30', 'font-bold'));
+      
+      document.getElementById('content-' + tabId).classList.remove('hidden');
+      document.getElementById('tab-' + tabId).classList.add('bg-white/30', 'font-bold');
+    }
+    // Set default active tab
+    switchTab('w2');
+
+    // Cycle Calculations (Week 2)
+    function calcCycle() {
+      const h1 = parseFloat(document.getElementById('inp-h1').value) || 0;
+      const h2 = parseFloat(document.getElementById('inp-h2').value) || 0;
+      const h3 = parseFloat(document.getElementById('inp-h3').value) || 0;
+      const m = parseFloat(document.getElementById('inp-m').value) || 0;
+
+      const qe = h1 - h3;
+      const qw = h2 - h1;
+      const cop = qw > 0 ? (qe / qw) : 0;
+      const qe_kw = qe * m;
+      const win_kw = qw * m;
+
+      document.getElementById('res-qe').innerText = qe.toFixed(2) + ' kJ/kg';
+      document.getElementById('res-qw').innerText = qw.toFixed(2) + ' kJ/kg';
+      document.getElementById('res-Qe').innerText = qe_kw.toFixed(2) + ' kW (~' + (qe_kw / 3.517).toFixed(2) + ' Tons)';
+      document.getElementById('res-Win').innerText = win_kw.toFixed(2) + ' kW';
+      document.getElementById('res-cop').innerText = cop.toFixed(2);
+    }
+    calcCycle();
+
+    // Intermediate Pressure (Week 3)
+    function calcInter() {
+      const pe = parseFloat(document.getElementById('inp-pe').value) || 1;
+      const pc = parseFloat(document.getElementById('inp-pc').value) || 1;
+      const p_inter = Math.sqrt(pe * pc);
+      document.getElementById('res-pinter').innerText = p_inter.toFixed(2) + ' bar';
+    }
+
+    // Decode Refrigerant Name (Week 4)
+    function decodeRef() {
+      const val = document.getElementById('inp-ref').value.toUpperCase().replace('R-', '').replace('R', '');
+      const digits = val.replace(/\D/g, '');
+      const letters = val.replace(/[^A-Z]/g, '');
+
+      if (digits.length === 3) {
+        const c = parseInt(digits[0]) + 1;
+        const h = parseInt(digits[1]) - 1;
+        const f = parseInt(digits[2]);
+        document.getElementById('res-ref').innerText = `คาร์บอน (C): ${c} อะตอม | ไฮโดรเจน (H): ${h} อะตอม | ฟลูออรีน (F): ${f} อะตอม | โครงสร้าง Isomer: ${letters || 'ปกติ'}`;
+      } else if (digits.length === 2) {
+        const c = 1;
+        const h = parseInt(digits[0]) - 1;
+        const f = parseInt(digits[1]);
+        document.getElementById('res-ref').innerText = `คาร์บอน (C): ${c} อะตอม | ไฮโดรเจน (H): ${h} อะตอม | ฟลูออรีน (F): ${f} อะตอม | โครงสร้าง Isomer: ${letters || 'ปกติ'}`;
+      } else {
+        document.getElementById('res-ref').innerText = 'ไม่สามารถถอดรหัสได้ (กรุณาระบุรหัสเช่น R-134a, R-32, R-12, R-22)';
+      }
+    }
+  </script>
+</body>
+</html>
